@@ -1,84 +1,90 @@
-# Product Decisions
+# PlanetPulse — Architectural Decision Points (DECISIONS.md)
+
+### Track 2: Real-World AI Products · Climate Tech Carbon Footprint Tracker
+### Team: Team 7 (Roshni Kumari, Shubham Srivastava)
+### Product: PlanetPulse — Personal Carbon Footprint Tracker
+
+This document articulates our deliberate product and architectural decisions for the three core Decision Points specified in the Code2Career Track 2 brief.
+
+---
 
 ## DP1 · The Nudge
 
-**Question:** What should the app do when the weekly target is crossed?
+### Question
+What does PlanetPulse do when the user's weekly carbon target is crossed: warn, encourage, shame, or block?
 
-**Decision:** The app should warn and encourage the user, but it should never shame or block them.
+### Decision
+Warn + encourage, but never shame or block.
 
-**Why:** The purpose of PlanetPulse is to help users understand their impact and make better choices. Going over the target should not make the user feel punished.
+When the user's weekly target is exceeded, PlanetPulse displays a clear warning showing the actual footprint and target. The user can still continue logging activities.
 
-**How it works:**
+### Example
+* **Weekly Target:** 5 kg CO₂
+* **Current Footprint:** 11.8 kg CO₂
 
-* Show a clear message that the weekly target has been crossed.
-* Show the user's current CO₂ value and the target.
-* Keep the message neutral and simple.
-* Suggest possible lower-impact choices.
-* Let the user continue using the app normally.
+> You have exceeded your weekly target.
+> Consider lower-impact alternatives for your next activity.
 
-**Reliability:** The app should inform the user about the result instead of trying to force their behavior.
+### Product Principle
+Warn instead of punish.
 
 ---
 
 ## DP2 · Absurd Input
 
-**Question:** What should happen if someone enters an obviously wrong value, such as 500,000 km for a car trip?
+### Question
+How should PlanetPulse handle an obviously incorrect entry, such as a 500,000 km car trip?
 
-**Decision:** The app should reject clearly unreasonable values and ask the user to check the entry.
+### Decision
+Reject obviously unreasonable values and ask the user to correct them.
 
-**Why:** A wrong value can make the total carbon footprint extremely inaccurate and affect all the dashboard results.
+PlanetPulse validates activity quantities before saving them. Clearly unreasonable single-entry values are rejected instead of being silently modified.
 
-**How it works:**
+### Example
+* **Car distance:** 500,000 km
+* **Status:** $\rightarrow$ Rejected
 
-* Check the value before saving it.
-* Reject values that are clearly unrealistic.
-* Tell the user why the value needs to be checked.
-* Never silently change the value entered by the user.
-* If a value is unusually high but could still be real, ask for confirmation instead of immediately rejecting it.
+> "This distance seems unusually high.
+> Please check your entry."
 
-**Example:**
-
-`500,000 km → "This distance seems unusually high. Please check your entry."`
-
-**Reliability:** This keeps incorrect data out while still giving users control over valid unusual entries.
+### Product Principle
+Validate instead of silently correcting.
 
 ---
 
 ## DP3 · The Week
 
-**Question:** When should a week start, and how should progress be shown during the week?
+### Question
+When does a "week" start, and how is progress calculated during the week?
 
-**Decision:** PlanetPulse will use a Monday–Sunday week.
+### Decision
+A PlanetPulse week runs from Monday to Sunday.
 
-**Why:** Using a fixed weekly cycle makes the progress easier to understand and keeps weekly comparisons consistent.
+Weekly footprint calculations use the activity date and include only activities belonging to the current Monday–Sunday period.
 
-**How it works:**
+### Mid-Week Example
+* **Day:** Wednesday
+* **Progress:** 3.2 / 5 kg CO₂ (64% of weekly target)
 
-* The week starts on Monday.
-* The week ends on Sunday.
-* The dashboard shows the current week's date range.
-* Progress is based only on activities recorded during the current week.
-* The app shows the current CO₂ total compared with the weekly target.
-* A new weekly calculation starts every Monday.
-* Previous weeks remain available in history.
-
-**Example:**
-
-`Wednesday → 3.2 kg / 5 kg → 64% of weekly target`
-
-**Reliability:** The app should calculate the week from the activity date, so activities are always counted in the correct week.
+### Product Principle
+Use a fixed, clearly defined time period.
 
 ---
 
-## General Reliability Principle
+## Cross-Cutting Principles
 
-PlanetPulse should be simple, clear, and predictable.
+1. **Transparency**
+2. **Data Reliability**
+3. **User Control**
+4. **Predictability**
+5. **Traceability**
 
-* Warn users instead of punishing them.
-* Check unusual inputs instead of silently changing them.
-* Keep calculations understandable.
-* Keep user activity records visible.
-* Use the same rules consistently.
-* Explain why an input is rejected.
-* Let users correct their own mistakes.
+---
 
+## Decision Summary
+
+| Decision Point | PlanetPulse Decision |
+| :--- | :--- |
+| **DP1 · The Nudge** | Warn + encourage; never shame or block |
+| **DP2 · Absurd Input** | Reject clearly unreasonable values and ask for correction |
+| **DP3 · The Week** | Monday–Sunday calendar week |
