@@ -1,7 +1,8 @@
 # PlanetPulse — Architectural Decision Points (DECISIONS.md)
 
 ### Track 2: Real-World AI Products · Climate Tech Carbon Footprint Tracker
-### Team: Team 7 (Roshni Kumari, Shubham Srivastava)
+### Team: Haridwar Team 07(GenCipher)
+### Team Members: Roshni Kumari, Shubham Srivastava
 ### Product: PlanetPulse — Personal Carbon Footprint Tracker
 
 This document articulates our deliberate product and architectural decisions for the three core Decision Points specified in the Code2Career Track 2 brief.
